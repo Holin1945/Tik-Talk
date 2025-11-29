@@ -1,0 +1,43 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 232px;
+  padding: 234.22px 163.5px 234.22px 164.5px;
+  height: 100dvh;
+  align-items: center;
+  margin: 0 5%;
+}
+
+.login-form {
+  width: 440px;
+}
+
+.login-form,
+.big-logo {
+  place-self: center;
+}
+
+.telegram-icon {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-eye-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  color: #ffffffbf;
+  top: 70%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-eye-btn.active {
+  color: var(--primary-color);
+}
