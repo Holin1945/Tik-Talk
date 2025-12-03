@@ -1,12 +1,19 @@
 :host {
-  display: grid;
-  grid-template-columns: 112px 1fr;
-  grid-gap: 24px;
+  display: flex;
+  gap: 24px;
+  width: 752px;
+  height: 146px;
+  align-items: center;
 }
 
 .username-and-name {
   display: flex;
   align-items: center;
   gap: 24px;
-  text-align: left;
+}
+
+.username-and-name.column {
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
 }

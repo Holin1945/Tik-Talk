@@ -1,9 +1,9 @@
 @if(post(); as post) {
 
-<app-avatar-cirlce
+<app-avatar-circle
   class="size32"
   [avatarUrl]="post.author.avatarUrl"
-></app-avatar-cirlce>
+></app-avatar-circle>
 
 <main class="post-body">
   <div class="post-header">
@@ -28,7 +28,7 @@
   </div>
 
   <app-post-input
-    (created)="onCreated()"
+    (created)="onCreated($event)"
     [postId]="post.id"
     [isCommentInput]="true"
   ></app-post-input>

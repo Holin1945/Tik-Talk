@@ -9,28 +9,25 @@ import {
   Renderer2,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
-import { AvatarCirlceComponent } from '../../../common-ui/avatar-cirlce/avatar-cirlce.component';
+import { AvatarCircleComponent } from '../../../common-ui/avatar-cirlce/avatar-cirlce.component';
 import { SvgIconComponent } from '../../../common-ui/svg-icon/svg-icon.component';
-import { PostService } from '../../../data/services/post.service';
 import { ProfileService } from '../../../data/services/profile.service';
 
 @Component({
   selector: 'app-post-input',
-  imports: [AvatarCirlceComponent, SvgIconComponent, FormsModule, CommonModule],
+  imports: [AvatarCircleComponent, SvgIconComponent, FormsModule, CommonModule],
   templateUrl: './post-input.component.html',
   styleUrl: './post-input.component.scss',
 })
 export class PostInputComponent {
   r2 = inject(Renderer2);
-  postService = inject(PostService);
+  profile = inject(ProfileService).me;
   isCommentInput = input(false);
   postId = input<number>(0);
-  profile = inject(ProfileService).me;
 
   postText = '';
 
-  @Output() created = new EventEmitter();
+  @Output() created = new EventEmitter<string>();
 
   @HostBinding('class.comment')
   get isComment() {
@@ -44,32 +41,10 @@ export class PostInputComponent {
     this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
   }
 
-  onCreatePost() {
-    if (!this.postText) return;
-
-    if (this.isCommentInput()) {
-      firstValueFrom(
-        this.postService.createComment({
-          text: this.postText,
-          authorId: this.profile()!.id,
-          postId: this.postId(),
-        })
-      ).then(() => {
-        this.postText = '';
-        this.created.emit();
-      });
-
-      return;
-    }
-
-    firstValueFrom(
-      this.postService.createPost({
-        title: 'Клевый пост',
-        content: this.postText,
-        authorId: this.profile()!.id,
-      })
-    ).then(() => {
+  onCreatedPost() {
+    if (this.postText.trim()) {
+      this.created.emit(this.postText);
       this.postText = '';
-    });
+    }
   }
 }

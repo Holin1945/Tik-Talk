@@ -1,13 +1,22 @@
-import { Component, input } from '@angular/core';
-import { AvatarCirlceComponent } from '../avatar-cirlce/avatar-cirlce.component';
+import { Component, inject, input } from '@angular/core';
 import { Profile } from './../../data/interfaces/profile.interface';
+import { ProfileService } from '../../data/services/profile.service';
+import { Router } from '@angular/router';
+import { AvatarCircleComponent } from '../avatar-cirlce/avatar-cirlce.component';
 
 @Component({
   selector: 'app-profile-header',
-  imports: [AvatarCirlceComponent],
+  imports: [AvatarCircleComponent],
   templateUrl: './profile-header.component.html',
   styleUrl: './profile-header.component.scss',
 })
 export class ProfileHeaderComponent {
-  profile = input<Profile>();
+  profile = input<Profile | null>();
+  profileService = inject(ProfileService);
+
+  private router = inject(Router);
+
+  get isSettings(): boolean {
+    return this.router.url.startsWith('/settings');
+  }
 }
